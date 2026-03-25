@@ -40,8 +40,7 @@ You can also add custom AI URLs and custom browser executables from the popup.
 - tray app with default browser / default AI settings
 - clipboard-based file handoff for fast uploads
 - custom AI and custom browser support
-- local history of recent launches
-- safer local config storage in `LocalAppData`
+- local desktop settings support
 
 ## Project Structure
 
@@ -167,7 +166,6 @@ When the tray app is running, you can:
 
 - set the default browser
 - set the default AI
-- view recent history
 - uninstall the Explorer menu/startup entry
 
 ### Use the keyboard shortcut
@@ -228,23 +226,6 @@ Important note:
 - whether the site accepts pasted files depends on that specific AI website
 - if a site does not accept pasted files, use its attach button or drag-and-drop
 
-## Configuration
-
-The app stores local settings in:
-
-```text
-%LOCALAPPDATA%\OpenWithAI\
-```
-
-This includes:
-
-- config
-- logs
-- runtime queue/lock files
-- recent history
-
-These local files are intentionally not committed to git.
-
 ## Supported Browser Behavior
 
 Built-in browser detection includes:
@@ -275,7 +256,7 @@ python OpenWithAI\main.py "C:\path\to\file1.pdf" "C:\path\to\file2.png"
 - the app runs locally on your machine
 - selected file contents are not uploaded by the app itself
 - files are copied to the Windows clipboard for you to paste into AI sites
-- local history may contain file paths, so avoid sharing your local app-data folder
+- some local app settings are stored on your device for normal desktop operation
 
 ## GitHub Remote
 

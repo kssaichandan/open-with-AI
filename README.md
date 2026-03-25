@@ -64,23 +64,12 @@ OpenWithAI/
 - Python 3.11+ recommended
 - PowerShell
 
-## Download / Clone
-
-```powershell
-git clone https://github.com/kssaichandan/open-with-AI.git
-cd open-with-AI
-```
-
 ## Quick Start
 
-If you just want to install and use the app quickly, run these commands in PowerShell:
+If you want to download, install, and run the app using a single PowerShell command, use this:
 
 ```powershell
-python -m venv .venv
-.venv\Scripts\Activate.ps1
-pip install -r OpenWithAI\requirements.txt
-python OpenWithAI\install.py
-python OpenWithAI\main.py
+git clone https://github.com/kssaichandan/open-with-AI.git; Set-Location open-with-AI; python -m venv .venv; .\.venv\Scripts\python.exe -m pip install -r OpenWithAI\requirements.txt; .\.venv\Scripts\python.exe OpenWithAI\install.py; .\.venv\Scripts\python.exe OpenWithAI\main.py
 ```
 
 After that:
@@ -92,6 +81,8 @@ After that:
 5. choose the browser and AI
 6. click **Confirm and Open in Browser**
 7. click the AI chat/upload area and press `Ctrl+V`
+
+If you want the manual setup steps instead, use the installation section below.
 
 ## Installation
 

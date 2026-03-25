@@ -184,44 +184,6 @@ Built-in browser detection includes:
 
 You can also register a custom browser executable from the popup UI.
 
-## Troubleshooting
-
-### The popup opens once but not again
-
-Make sure the tray app is running with the latest code and reinstall Explorer integration:
-
-```powershell
-python OpenWithAI\install.py
-python OpenWithAI\main.py
-```
-
-### The AI page opens for Claude but not others
-
-Check:
-
-- your selected browser path is valid
-- the site is reachable from your network
-- your browser is not blocking the launched URL
-
-### Files appear in the popup but do not upload on the site
-
-That usually means the website does not accept pasted files in that field.
-
-Use:
-
-- the site upload/attach button
-- drag-and-drop
-
-### Right-click menu does not appear
-
-Run:
-
-```powershell
-python OpenWithAI\install.py
-```
-
-Then restart Explorer.
-
 ## Development Notes
 
 Useful checks:

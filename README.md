@@ -72,64 +72,136 @@ git clone https://github.com/kssaichandan/open-with-AI.git
 cd open-with-AI
 ```
 
-## Setup
+## Quick Start
 
-Create and activate a virtual environment:
+If you just want to install and use the app quickly, run these commands in PowerShell:
 
 ```powershell
 python -m venv .venv
 .venv\Scripts\Activate.ps1
+pip install -r OpenWithAI\requirements.txt
+python OpenWithAI\install.py
+python OpenWithAI\main.py
 ```
 
-Install dependencies:
+After that:
+
+1. look for the tray icon
+2. open File Explorer
+3. right-click one or more files
+4. click **Open with AI**
+5. choose the browser and AI
+6. click **Confirm and Open in Browser**
+7. click the AI chat/upload area and press `Ctrl+V`
+
+## Installation
+
+### 1. Create a virtual environment
 
 ```powershell
-pip install -r OpenWithAI\requirements.txt
+python -m venv .venv
 ```
 
-If PowerShell blocks activation, run:
+### 2. Activate the virtual environment
+
+```powershell
+.venv\Scripts\Activate.ps1
+```
+
+If PowerShell blocks activation, use:
 
 ```powershell
 Set-ExecutionPolicy -Scope Process Bypass
 .venv\Scripts\Activate.ps1
 ```
 
-## Run the App
-
-Start the tray application:
+### 3. Install Python dependencies
 
 ```powershell
-python OpenWithAI\main.py
+pip install -r OpenWithAI\requirements.txt
 ```
 
-Once running:
-
-- look for the tray icon
-- set your default browser
-- set your default AI
-- use `Ctrl+Shift+A` to open your default AI quickly
-
-## Install File Explorer Integration
-
-To add the right-click **Open with AI** option:
+### 4. Install the Windows Explorer integration
 
 ```powershell
 python OpenWithAI\install.py
 ```
 
-After installing:
+This adds:
 
-1. open File Explorer
-2. select one or more files
-3. right-click
-4. click **Open with AI**
-5. choose browser and AI target
-6. click **Confirm and Open in Browser**
-7. inside the AI page, click the chat/upload area and press `Ctrl+V`
+- the **Open with AI** right-click menu in File Explorer
+- the startup entry for the tray app
 
-If the menu does not appear immediately, restart Explorer or sign out/in once.
+### 5. Start the tray application
+
+```powershell
+python OpenWithAI\main.py
+```
+
+When it is running, you should see the tray icon.
+
+## How to Use
+
+### Use from File Explorer
+
+This is the main way to use the app.
+
+1. Open File Explorer.
+2. Select one file or multiple files.
+3. Right-click the selection.
+4. Click **Open with AI**.
+5. The popup window will open.
+6. Choose:
+   - the browser
+   - the AI destination
+7. Click **Confirm and Open in Browser**.
+8. The chosen AI page opens in your browser.
+9. Click inside the chat box or upload area.
+10. Press `Ctrl+V`.
+
+The selected files are copied to the Windows clipboard, so supported AI sites can receive them as pasted files.
+
+### Use from the tray icon
+
+When the tray app is running, you can:
+
+- set the default browser
+- set the default AI
+- view recent history
+- uninstall the Explorer menu/startup entry
+
+### Use the keyboard shortcut
+
+Press:
+
+```text
+Ctrl + Shift + A
+```
+
+This opens your default AI using your default browser.
+
+### Add custom AI sites
+
+Inside the popup:
+
+1. click **Add Custom AI**
+2. enter the AI name
+3. enter the AI URL
+
+This is useful for services like Perplexity or any custom web-based AI tool.
+
+### Add a custom browser
+
+Inside the popup:
+
+1. click **Add Custom Browser**
+2. choose the browser executable (`.exe`)
+
+This lets you launch the AI page in browsers beyond the built-in list.
 
 ## Uninstall Explorer Integration
+
+If you want to remove the right-click menu and startup entry:
 
 ```powershell
 python OpenWithAI\uninstall.py

@@ -8,6 +8,7 @@ from typing import Iterable, List
 from settings import QUEUE_DIR, ensure_app_dirs
 
 LOCK_STALE_SECONDS = 120
+LOCK_STARTUP_GRACE_SECONDS = 5
 PAYLOAD_STALE_SECONDS = 300
 
 
@@ -44,8 +45,13 @@ def _cleanup_stale_files() -> None:
     lock_path = _lock_path()
     if os.path.exists(lock_path):
         owner_pid = _read_lock_owner()
-        lock_age = now - os.path.getmtime(lock_path)
-        if lock_age > LOCK_STALE_SECONDS or not _pid_exists(owner_pid):
+        try:
+            lock_age = now - os.path.getmtime(lock_path)
+        except FileNotFoundError:
+            lock_age = 0
+        if owner_pid > 0 and _pid_exists(owner_pid):
+            pass
+        elif lock_age > LOCK_STALE_SECONDS or (owner_pid == 0 and lock_age > LOCK_STARTUP_GRACE_SECONDS):
             with suppress(FileNotFoundError, PermissionError):
                 os.remove(lock_path)
 
@@ -89,17 +95,31 @@ def try_acquire_primary_lock() -> bool:
     ensure_app_dirs()
     _cleanup_stale_files()
     try:
-        with open(_lock_path(), "x", encoding="utf-8") as file_obj:
+        fd = os.open(_lock_path(), os.O_CREAT | os.O_EXCL | os.O_WRONLY)
+        with os.fdopen(fd, "w", encoding="utf-8") as file_obj:
             file_obj.write(str(os.getpid()))
+            file_obj.flush()
+            os.fsync(file_obj.fileno())
         return True
     except FileExistsError:
         owner_pid = _read_lock_owner()
-        if not _pid_exists(owner_pid):
+        try:
+            lock_age = time.time() - os.path.getmtime(_lock_path())
+        except FileNotFoundError:
+            lock_age = 0
+        if owner_pid > 0 and _pid_exists(owner_pid):
+            return False
+        if lock_age < LOCK_STARTUP_GRACE_SECONDS:
+            return False
+        if owner_pid == 0 or not _pid_exists(owner_pid):
             with suppress(FileNotFoundError, PermissionError):
                 os.remove(_lock_path())
             try:
-                with open(_lock_path(), "x", encoding="utf-8") as file_obj:
+                fd = os.open(_lock_path(), os.O_CREAT | os.O_EXCL | os.O_WRONLY)
+                with os.fdopen(fd, "w", encoding="utf-8") as file_obj:
                     file_obj.write(str(os.getpid()))
+                    file_obj.flush()
+                    os.fsync(file_obj.fileno())
                 return True
             except FileExistsError:
                 return False

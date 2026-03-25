@@ -13,13 +13,12 @@ MAIN_PATH = os.path.join(APP_DIR, "main.py")
 APP_COMMAND = f'"{APP_EXE}" "{MAIN_PATH}" "%1"'
 STARTUP_COMMAND = f'"{APP_EXE}" "{MAIN_PATH}"'
 ACTIVE_CONTEXT_MENU_PATHS = [
-    rf"Software\Classes\*\shell\{VERB_NAME}",
-    rf"Software\Classes\Directory\shell\{VERB_NAME}",
+    rf"Software\Classes\AllFilesystemObjects\shell\{VERB_NAME}",
 ]
 REMOVE_CONTEXT_MENU_PATHS = [
+    rf"Software\Classes\AllFilesystemObjects\shell\{VERB_NAME}",
     rf"Software\Classes\*\shell\{VERB_NAME}",
     rf"Software\Classes\Directory\shell\{VERB_NAME}",
-    rf"Software\Classes\AllFilesystemObjects\shell\{VERB_NAME}",
 ]
 STARTUP_KEY_PATH = r"Software\Microsoft\Windows\CurrentVersion\Run"
 
